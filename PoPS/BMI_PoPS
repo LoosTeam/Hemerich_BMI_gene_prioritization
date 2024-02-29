@@ -1,1 +1,26 @@
+#### Command line code used to run PoPS
 
+# load magma and bedtools modules
+ml magma_gwas/1.0.8
+ml bedtools/2.29.0
+
+# run magma on file
+magma --bfile /sc/arion/projects/loosr01a/Arden/UKBB/UKBBRef --gene-annot data/magma_0kb.genes.annot --pval /sc/arion/projects/loosr01a/daiane/projects/BMI_genes/magma/Meta-analysis_Locke_et_al+UKBiobank_2018_UPDATED.txt ncol=N --gene-model snp-wise=mean --out bmi
+
+# run pops pops.feature_selection.py
+python pops.feature_selection.py --features data/PoPS.features.txt.gz --gene_results bmi --out bmi
+
+# run pops pops.predict_scores.py
+for i in {1..22}; do python pops.predict_scores.py --gene_loc data/gene_loc.txt --gene_results bfp --features data/PoPS.features.txt.gz --selected_features bfp.features --control_features data/control.features --chromosome $i --out bfp_$i;done
+
+# Merge output with genes downloaded from Biomart to get gene symbols
+for file in  bmi*.results; do perl /sc/arion/projects/loosr01a/daiane/tools/merge_tables.pl --file1 /sc/arion/projects/loosr01a/daiane/projects/WHR_genes/pops/biomart_genes.txt --file2 $file --index ENSGID > $file\_merged.txt;done
+
+# Join and format final results file
+sed -i "s/ /\t/g" bmi*_merged.txt
+cat bmi*.results_merged.txt > bmi.results_ALLCHR.txt
+grep -v ENSGID bmi.results_ALLCHR.txt > tmp && mv tmp bmi.results_ALLCHR.txt
+awk 'BEGIN { OFS = "\t"} { print $3, $4, $5, $6, $2}' bmi.results_ALLCHR.txt > bmi.results_ALLCHR.bed
+
+# Intersect final results file with BMI loci
+bedtools intersect -wa -wb -a /sc/arion/projects/loosr01a/daiane/projects/BMI_genes/gene_mapping/bmi_loci_1000.bed -b bmi.results_ALLCHR.bed > BMI_pops_genes.txt
