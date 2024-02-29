@@ -1,1 +1,14 @@
+### Command line code used to run SMR
 
+
+## GWAS Yengo on GTex Brain
+./smr_Linux --bfile /sc/orga/projects/loosr01a/Arden/UKBB/UKBBRef --gwas-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/gwas/Meta-analysis_Locke_et_al+UKBiobank_2018_UPDATED_smr.txt --beqtl-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/eqtl/GTEx-brain/GTEx_Brain_std --out /sc/orga/projects/loosr01a/daiane/projects/smr/smr/output/yengo_gtexbrain --thread-num 10
+
+## GWAS Yengo on CMC 
+./smr_Linux --bfile /sc/orga/projects/loosr01a/Arden/UKBB/UKBBRef --gwas-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/gwas/Meta-analysis_Locke_et_al+UKBiobank_2018_UPDATED_smr.txt --beqtl-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/eqtl/CMC_2/CMC_eqtl --out /sc/orga/projects/loosr01a/daiane/projects/smr/smr/output/yengo_CMC --thread-num 10
+
+## GWAS Yengo on Rosmap 
+./smr_Linux --bfile /sc/orga/projects/loosr01a/Arden/UKBB/UKBBRef --gwas-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/gwas/Meta-analysis_Locke_et_al+UKBiobank_2018_UPDATED_smr.txt --beqtl-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/eqtl/ROSMAP_2/Rosmap_eQTL_std --out /sc/orga/projects/loosr01a/daiane/projects/smr/smr/output/yengo_ROSMAP --thread-num 10
+
+## GWAS Yengo on eQTLgen
+./smr_Linux --bfile /sc/orga/projects/loosr01a/Arden/UKBB/UKBBRef --gwas-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/gwas/Meta-analysis_Locke_et_al+UKBiobank_2018_UPDATED_smr.txt --beqtl-summary /sc/orga/projects/loosr01a/daiane/projects/smr/data/eqtl/cis-eQTLsFDR0.05-ProbeLevel.txt_besd --out /sc/orga/projects/loosr01a/daiane/projects/smr/smr/output/yengo_eqtlgen  --thread-num 10 
